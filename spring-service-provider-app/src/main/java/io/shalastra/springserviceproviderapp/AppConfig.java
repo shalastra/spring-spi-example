@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.shalastra.springserviceproviderapi.DemoProvider;
+import io.shalastra.springserviceproviderapi.exception.ImplementedProviderNotFoundException;
+import io.shalastra.springserviceproviderapi.exception.MoreThanOneProviderFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,19 +19,33 @@ public class AppConfig {
 
   @Bean
   public DemoProvider demoProvider() {
-    List<String> names = new ArrayList<>(SpringFactoriesLoader.loadFactoryNames(DemoProvider.class, null));
-    String name = names.get(0);
     DemoProvider demoProvider;
 
+    String providerName = getLoadedProviderName();
+
     try {
-      Class<?> instanceClass = ClassUtils.forName(name, null);
+      Class<?> instanceClass = ClassUtils.forName(providerName, null);
       Assert.isAssignable(DemoProvider.class, instanceClass);
 
       demoProvider = (DemoProvider) instanceClass.newInstance();
     } catch (Exception e) {
-      throw new IllegalArgumentException("Cannot instantiate 'IntegrationConfigurationInitializer': " + name, e);
+      throw new IllegalArgumentException("Cannot instantiate 'IntegrationConfigurationInitializer': " + providerName, e);
     }
 
     return demoProvider;
+  }
+
+  private String getLoadedProviderName() {
+    List<String> names = new ArrayList<>(SpringFactoriesLoader.loadFactoryNames(DemoProvider.class, null));
+
+    if(names.isEmpty()) {
+      throw new ImplementedProviderNotFoundException("Cannot find any Provider implementation");
+    }
+
+    if(names.size() > 1) {
+      throw new MoreThanOneProviderFoundException("Found more than one Provider implementation while only one is allowed");
+    }
+
+    return names.get(0);
   }
 }
