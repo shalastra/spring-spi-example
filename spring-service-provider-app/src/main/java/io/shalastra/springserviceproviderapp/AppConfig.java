@@ -29,7 +29,7 @@ public class AppConfig {
 
       demoProvider = (DemoProvider) instanceClass.newInstance();
     } catch (Exception e) {
-      throw new IllegalArgumentException("Cannot instantiate 'IntegrationConfigurationInitializer': " + providerName, e);
+      throw new IllegalArgumentException("Cannot instantiate " + providerName, e);
     }
 
     return demoProvider;
