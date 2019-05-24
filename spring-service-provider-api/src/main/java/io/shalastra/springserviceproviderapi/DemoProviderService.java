@@ -1,24 +1,25 @@
-package io.shalastra.springserviceproviderapp;
+package io.shalastra.springserviceproviderapi;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.shalastra.springserviceproviderapi.DemoProvider;
 import io.shalastra.springserviceproviderapi.exception.ImplementedProviderNotFoundException;
 import io.shalastra.springserviceproviderapi.exception.MoreThanOneProviderFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.SpringFactoriesLoader;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 @Slf4j
-@Configuration
-public class AppConfig {
+@Service
+public class DemoProviderService {
 
-  @Bean
-  public DemoProvider demoProvider() {
+  private static final int DEFAULT_PROVIDER_POSITION = 0;
+
+  public DemoProviderService() { }
+
+  public DemoProvider getDemoProvider() {
     DemoProvider demoProvider;
 
     String providerName = getLoadedProviderName();
@@ -38,14 +39,14 @@ public class AppConfig {
   private String getLoadedProviderName() {
     List<String> names = new ArrayList<>(SpringFactoriesLoader.loadFactoryNames(DemoProvider.class, null));
 
-    if(names.isEmpty()) {
+    if (names.isEmpty()) {
       throw new ImplementedProviderNotFoundException("Cannot find any Provider implementation");
     }
 
-    if(names.size() > 1) {
+    if (names.size() > 1) {
       throw new MoreThanOneProviderFoundException("Found more than one Provider implementation while only one is allowed");
     }
 
-    return names.get(0);
+    return names.get(DEFAULT_PROVIDER_POSITION);
   }
 }
