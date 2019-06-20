@@ -17,6 +17,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
+    <project.version>0.0.1-SNAPSHOT</project.version>
   </properties>
 
   <modules>
@@ -30,7 +31,12 @@
       <dependency>
         <groupId>io.shalastra</groupId>
         <artifactId>spring-service-provider-api</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.shalastra</groupId>
+        <artifactId>spring-service-provider-ext</artifactId>
+        <version>${project.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

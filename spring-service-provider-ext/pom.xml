@@ -21,7 +21,6 @@
     <dependency>
       <groupId>io.shalastra</groupId>
       <artifactId>spring-service-provider-api</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
 

@@ -12,25 +12,14 @@
 
   <packaging>jar</packaging>
 
-  <properties>
-    <project.version>0.0.1-SNAPSHOT</project.version>
-  </properties>
-
   <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter</artifactId>
-    </dependency>
-
     <dependency>
       <groupId>io.shalastra</groupId>
       <artifactId>spring-service-provider-api</artifactId>
-      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>io.shalastra</groupId>
       <artifactId>spring-service-provider-ext</artifactId>
-      <version>${project.version}</version>
     </dependency>
   </dependencies>
 
